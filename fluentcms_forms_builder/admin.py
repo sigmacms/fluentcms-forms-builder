@@ -3,6 +3,7 @@
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin.sites import NotRegistered
+from django.forms import ModelForm, SlugField
 
 from forms_builder.forms.admin import (
     FieldAdmin as AbstractFieldAdmin, FormAdmin as AbstractFormAdmin)
@@ -19,8 +20,17 @@ if 'forms_builder.forms' in settings.INSTALLED_APPS:
         pass
 
 
-class FieldAdmin(AbstractFieldAdmin):
+class FieldInlineForm(ModelForm):
+    slug = SlugField(required=True)
+
+    class Meta:
+        model = Field
+        fields = '__all__'
+
+
+class FieldAdmin(admin.TabularInline):
     model = Field
+    form = FieldInlineForm
 
 
 class FormAdmin(AbstractFormAdmin):

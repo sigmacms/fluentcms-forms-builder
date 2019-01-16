@@ -69,6 +69,14 @@ class Field(AbstractField):
 @python_2_unicode_compatible
 class FormItem(ContentItem):
 
+    show_form_title = models.BooleanField(
+        _("Show form title"), default=True, db_index=True
+    )
+
+    show_form_intro = models.BooleanField(
+        _("Show form intro"), default=True, db_index=True
+    )
+
     form = models.ForeignKey(Form)
 
     class Meta:
